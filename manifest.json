@@ -1,0 +1,24 @@
+{
+
+    "manifest_version": 2,
+    "name": "NotInterested",
+    "description": "Middle-click on a Youtube video to mark it as \"Not interested\"",
+    "version": "1.0",
+    "homepage_url": "https://github.com/ZanyMonk/NotInterested",
+
+    "permissions": ["storage"],
+
+    "options_ui": {
+        "page": "options.html",
+        "browser_style": true,
+        "open_in_tab": true
+    },
+  
+    "content_scripts": [
+      {
+        "matches": ["https://www.youtube.com/"],
+        "js": ["jquery.js", "content-script.js"]
+      }
+    ]
+  
+  }
