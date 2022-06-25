@@ -3,8 +3,13 @@ if (typeof browser === 'undefined') {
 }
 
 const OPTIONS = [
-    ['controls_button', 1],
-    ['controls_modifier', 0]
+    ['controls_button', 'middle'],
+    ['controls_modifier', 'ctrl'],
+    ['button_labels', [
+        'Pas intéressé',
+        'Not interested',
+        'No me interesa'
+    ]],
 ];
 
 function broadcastMessageToTabs(msg, cb) {
@@ -34,8 +39,11 @@ function saveOptions(e) {
     const options = {};
 
     forEachOpt((name, default_value) => {
-        options[name] = form.find(`[name="${name}"]`).val() || default_value;
+        let val = form.find(`[name="${name}"]`).val() || default_value;
+        console.log(val);
+        options[name] = name === 'button_labels' ? val.split('\n') : val;
     });
+
 
     browser.storage.sync.set(options);
     broadcastMessageToTabs('reloadConfig', () => window.close());
@@ -43,7 +51,8 @@ function saveOptions(e) {
 
 function restoreOption(name, default_value) {
     browser.storage.sync.get(name, (res) => {
-        document.querySelector(`[name="${name}"]`).value = res[name] || default_value;
+        let val = res[name] || default_value;
+        document.querySelector(`[name="${name}"]`).value = Array.isArray(val) ? val.join('\n') : val;
     });
 }
 

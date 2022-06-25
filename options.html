@@ -3,11 +3,16 @@
 <head>
     <meta charset="utf-8">
     <script src="jquery.js"></script>
+    <style>
+        div.field {
+            margin: 10px 0;
+        }
+    </style>
 </head>
 
 <body>
     <form>
-        <div>
+        <div class="field">
             <label>Button</label>
             <select name="controls_button">
                 <option value="0">Left click</option>
@@ -15,14 +20,30 @@
                 <option value="2">Right click</option>
             </select>
         </div>
-        <div>
-            <label>Modifier</label>
+
+        <div class="field">
+            <label>Modifiers</label>
             <select name="controls_modifier">
-                <option value="0">None</option>
-                <option value="1">Ctrl</option>
-                <option value="2">Alt</option>
-                <option value="3">Ctrl + Alt</option>
+                <option value="none">None</option>
+                <option value="alt">Alt</option>
+                <option value="ctrl">Ctrl</option>
+                <option value="shift">Shift</option>
+                <option value="alt_ctrl">Alt+Ctrl</option>
+                <option value="alt_shift">Alt+Shift</option>
+                <option value="ctrl_shift">Ctrl+Shift</option>
+                <option value="alt_ctrl_shift">Alt+Ctrl+Shift</option>
             </select>
+        </div>
+
+        <div class="field">
+            <p>
+                To find the right button to click the extension looks for the menu button with the right label.
+                As the label is translated it may not work out of the box with your locale, but you can add the button label in your language in the field below so it can be matched by this extension.
+            </p>
+
+            <label>Button labels (one by line)</label>
+            <br>
+            <textarea name="button_labels" rows="10" cols="50"></textarea>
         </div>
         <button type="submit">Save</button>
     </form>

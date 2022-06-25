@@ -6,6 +6,7 @@ if (typeof browser === 'undefined') {
 function loadConfig() {
   browser.storage.sync.get(null, (res) => {
     config = res;
+    console.log('CONFIG', config);
   });
 }
 
@@ -38,10 +39,14 @@ function filterMiddleClick(fn) {
   return function (event) {
     if (
         event.button === parseInt(config.controls_button || '1') && (
-           config.controls_modifier === '0' && !event.ctrlKey && !event.altKey
-        || config.controls_modifier === '1' && event.ctrlKey && !event.altKey
-        || config.controls_modifier === '2' && !event.ctrlKey && event.altKey
-        || config.controls_modifier === '3' && event.ctrlKey && event.altKey
+           config.controls_modifier === 'none' && !event.ctrlKey && !event.altKey && !event.shiftKey
+        || config.controls_modifier === 'ctrl' && event.ctrlKey && !event.altKey && !event.shiftKey
+        || config.controls_modifier === 'alt' && !event.ctrlKey && event.altKey && !event.shiftKey
+        || config.controls_modifier === 'shift' && !event.ctrlKey && !event.altKey && event.shiftKey
+        || config.controls_modifier === 'alt_ctrl' && event.ctrlKey && event.altKey && !event.shiftKey
+        || config.controls_modifier === 'alt_shift' && !event.ctrlKey && event.altKey && event.shiftKey
+        || config.controls_modifier === 'ctrl_shift' && event.ctrlKey && !event.altKey && event.shiftKey
+        || config.controls_modifier === 'alt_ctrl_shift' && event.ctrlKey && event.altKey && event.shiftKey
       )
     ) {
       fn.bind(this)(event);
@@ -51,11 +56,7 @@ function filterMiddleClick(fn) {
 }
 
 function buildButtonSelector() {
-  return [
-    "Pas intéressé",
-    "Not interested",
-    "No me interesa"
-  ].map(label => `.ytd-menu-popup-renderer:contains("${label}")`).join(',');
+  return config.button_labels.map(label => `.ytd-menu-popup-renderer:contains("${label}")`).join(',');
 }
 
 function clickNotInterestedButton(elem) {

@@ -1,6 +1,6 @@
 {
 
-    "manifest_version": 2,
+    "manifest_version": 3,
     "name": "NotInterested",
     "description": "Middle-click on a Youtube video to mark it as \"Not interested\"",
     "version": "1.0",
@@ -11,12 +11,12 @@
     "options_ui": {
         "page": "options.html",
         "browser_style": true,
-        "open_in_tab": true
+        "open_in_tab": false
     },
   
     "content_scripts": [
       {
-        "matches": ["https://www.youtube.com/"],
+        "matches": ["https://www.youtube.com/*"],
         "js": ["jquery.js", "content-script.js"]
       }
     ]
